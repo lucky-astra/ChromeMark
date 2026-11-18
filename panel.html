@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChromeMark 素材库</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <header class="topbar">
+      <button class="brand" id="homeButton" aria-label="返回素材库">
+        <span class="brand-mark"><span></span><span></span><span></span><span></span></span>
+        <span class="brand-name">Chrome<span>Mark</span></span>
+      </button>
+      <div class="top-actions">
+        <span class="local-badge"><i></i> 仅本地</span>
+        <button class="quick-launch" id="quickLaunch" title="打开快速调用面板">Alt + M</button>
+        <button class="icon-button" id="settingsButton" aria-label="设置" title="设置">⚙</button>
+      </div>
+    </header>
+
+    <main id="libraryView" class="view">
+      <section class="intro-row">
+        <div>
+          <p class="eyebrow">YOUR PERSONAL CLIP LIBRARY</p>
+          <h1>灵感，随手收好<span class="heading-spark">✳</span></h1>
+          <p class="intro-copy">好句子、好画面，都值得留在手边。</p>
+        </div>
+        <button class="primary-button create-button" id="createButton"><span>＋</span> 新建收藏</button>
+      </section>
+
+      <div class="search-row">
+        <label class="search-box">
+          <span class="search-icon">⌕</span>
+          <input id="searchInput" type="search" placeholder="搜索内容、标签或来源…" autocomplete="off">
+          <kbd>⌘ K</kbd>
+        </label>
+      </div>
+
+      <nav class="filter-tabs" id="typeFilters" aria-label="收藏类型">
+        <button class="filter-tab active" data-type="all">全部 <span id="allCount">0</span></button>
+        <button class="filter-tab" data-type="text">文本</button>
+        <button class="filter-tab" data-type="image">图片</button>
+        <button class="filter-tab" data-type="starred"><span class="star-glyph">★</span> 星标</button>
+      </nav>
+
+      <div class="list-toolbar">
+        <label class="category-filter">
+          <span>分类</span>
+          <select id="categoryFilter" aria-label="按分类筛选"></select>
+          <span class="select-caret">⌄</span>
+        </label>
+        <label class="sort-filter">
+          <select id="sortSelect" aria-label="排序方式">
+            <option value="newest">最新收藏</option>
+            <option value="oldest">最早收藏</option>
+            <option value="updated">最近修改</option>
+            <option value="used">最常使用</option>
+          </select>
+          <span class="select-caret">⌄</span>
+        </label>
+      </div>
+
+      <div class="results-caption"><span id="resultCount">0 条收藏</span><span id="activeCategoryLabel">全部分类</span></div>
+      <section id="collectionList" class="collection-list" aria-live="polite"></section>
+      <section id="emptyState" class="empty-state" hidden>
+        <div class="empty-art"><span class="empty-sun">✳</span><span class="empty-note">Aa</span><span class="empty-dot"></span></div>
+        <h2 id="emptyTitle">你的灵感库还很安静</h2>
+        <p id="emptyCopy">在网页选中文字或悬停图片，把值得留下的内容收进来。</p>
+        <button class="text-button" id="emptyCreateButton">＋ 新建一条收藏</button>
+      </section>
+    </main>
+
+    <main id="settingsView" class="view settings-view" hidden>
+      <button class="back-button" id="backButton">← <span>返回素材库</span></button>
+      <p class="eyebrow">PREFERENCES</p>
+      <h1 class="settings-title">设置与数据</h1>
+      <p class="settings-intro">让 ChromeMark 按你的习惯工作。</p>
+
+      <section class="settings-section">
+        <div class="section-heading"><div><h2>网页收藏</h2><p>只在你允许后，为网页添加轻量收藏按钮。</p></div><span class="section-icon">⌁</span></div>
+        <div class="setting-row">
+          <div><strong>网页浮动收藏按钮</strong><span>选中文字或悬停图片时显示</span></div>
+          <button class="switch" id="enhancedToggle" role="switch" aria-checked="false"><span></span></button>
+        </div>
+        <div class="permission-note" id="permissionNote">启用后会请求你访问网页内容的权限。收藏数据仍只保存在本机。</div>
+        <div class="setting-row compact-row">
+          <div><strong>图片悬停按钮</strong><span>也可通过网页右键菜单收藏图片</span></div>
+          <button class="switch" id="imageHoverToggle" role="switch" aria-checked="true"><span></span></button>
+        </div>
+        <div class="setting-row compact-row">
+          <div><strong>收藏成功提示</strong><span>保存后显示轻提示</span></div>
+          <button class="switch" id="toastToggle" role="switch" aria-checked="true"><span></span></button>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <div class="section-heading"><div><h2>默认分类</h2><p>快速收藏会自动放入此分类。</p></div><span class="section-icon">▤</span></div>
+        <label class="select-card"><span>快速收藏到</span><select id="defaultCategory"></select><span class="select-caret">⌄</span></label>
+        <div class="category-manager" id="categoryManager"></div>
+        <button class="secondary-button full-button" id="addCategoryButton">＋ 新建分类</button>
+      </section>
+
+      <section class="settings-section">
+        <div class="section-heading"><div><h2>外观</h2><p>选择更适合你的阅读方式。</p></div><span class="section-icon">◐</span></div>
+        <label class="select-card"><span>主题</span><select id="themeSelect"><option value="system">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option></select><span class="select-caret">⌄</span></label>
+      </section>
+
+      <section class="settings-section">
+        <div class="section-heading"><div><h2>数据管理</h2><p>内容与图片优先保存在本地浏览器。</p></div><span class="section-icon">◫</span></div>
+        <div class="data-actions">
+          <button class="data-action" id="exportButton"><span class="action-icon">↥</span><span><strong>导出 JSON</strong><small>备份文本、分类与图片来源</small></span><b>→</b></button>
+          <label class="data-action import-action"><span class="action-icon">↧</span><span><strong>导入备份</strong><small>合并或覆盖现有收藏</small></span><b>→</b><input id="importInput" type="file" accept="application/json,.json" hidden></label>
+          <button class="data-action danger-action" id="clearButton"><span class="action-icon">⌫</span><span><strong>清空本机数据</strong><small>删除全部收藏并恢复默认分类</small></span><b>→</b></button>
+        </div>
+        <div class="storage-footnote"><span class="privacy-lock">◈</span><span>收藏数据不会上传；缓存或预览远程图片时会请求图片原站。</span></div>
+      </section>
+
+      <footer class="settings-footer">CHROMEMARK <span>·</span> VERSION 1.0.0</footer>
+    </main>
+
+    <div class="dialog-backdrop" id="dialogBackdrop" hidden>
+      <section class="save-dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+        <div class="dialog-topline"><div><p class="eyebrow" id="dialogEyebrow">SAVE TO YOUR LIBRARY</p><h2 id="dialogTitle">整理这份灵感</h2></div><button class="icon-button close-dialog" id="closeDialog" aria-label="关闭">×</button></div>
+        <div id="imagePreviewWrap" class="dialog-image-preview" hidden><img id="imagePreview" alt="收藏图片预览"></div>
+        <label class="field-label" id="contentLabel">收藏内容</label>
+        <textarea id="contentField" class="content-field" rows="4" placeholder="写下值得记住的内容…"></textarea>
+        <div class="field-grid">
+          <label class="form-field"><span>分类</span><select id="dialogCategory"></select></label>
+          <label class="form-field"><span>标签 <small>用逗号分开</small></span><input id="tagsField" type="text" placeholder="灵感，写作"></label>
+        </div>
+        <label class="form-field note-field"><span>个人备注 <small>选填</small></span><textarea id="noteField" rows="2" placeholder="记下你的想法…"></textarea></label>
+        <div class="source-block"><div class="source-icon">↗</div><div><span>内容来源</span><strong id="sourceTitle">当前网页</strong><small id="sourceDomain"></small></div><a id="sourceLink" target="_blank" rel="noreferrer" aria-label="打开来源">↗</a></div>
+        <div class="dialog-actions"><button class="secondary-button" id="cancelDialog">取消</button><button class="primary-button" id="saveDialogButton">保存到素材库 <span>→</span></button></div>
+      </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script type="module" src="panel.js"></script>
+</body>
+</html>

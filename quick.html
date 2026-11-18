@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChromeMark 快速调用</title>
+  <link rel="stylesheet" href="panel.css">
+  <link rel="stylesheet" href="quick.css">
+</head>
+<body class="quick-body">
+  <main class="quick-shell">
+    <header class="quick-header">
+      <div class="quick-brand"><span class="brand-mark"><span></span><span></span><span></span><span></span></span><div><strong>快速调用</strong><small>从你的灵感库里，找到下一句</small></div></div>
+      <button id="closeQuick" class="quick-close" aria-label="关闭">×</button>
+    </header>
+    <label class="quick-search"><span>⌕</span><input id="quickSearch" placeholder="搜索收藏内容…" autofocus><kbd>ESC</kbd></label>
+    <div class="quick-hint"><span>↑ ↓ 选择</span><span><kbd>↵</kbd> 插入 / 复制</span><span><kbd>⇧ ↵</kbd> 仅复制</span></div>
+    <div class="quick-results" id="quickResults"></div>
+    <footer class="quick-footer"><span>CHROMEMARK</span><span>本地素材库 <i></i></span></footer>
+    <div class="quick-toast" id="quickToast"></div>
+  </main>
+  <script type="module" src="quick.js"></script>
+</body>
+</html>
